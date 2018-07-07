@@ -1,0 +1,7 @@
+package:
+    type:       library
+    name:       web
+    title:      Web
+    headline:   Web
+    keywords:   web
+    license:    BSD-3-Clause

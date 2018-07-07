@@ -1,0 +1,41 @@
+{
+    "name": "hiqsol/web",
+    "type": "library",
+    "description": "Web",
+    "keywords": [
+        "web"
+    ],
+    "homepage": "https://github.com/hiqsol/web",
+    "license": "BSD-3-Clause",
+    "support": {
+        "email": "sol@hiqdev.com",
+        "source": "https://github.com/hiqsol/web",
+        "issues": "https://github.com/hiqsol/web/issues",
+        "wiki": "https://github.com/hiqsol/web/wiki"
+    },
+    "authors": [
+        {
+            "name": "Andrii Vasyliev",
+            "email": "sol@hiqdev.com",
+            "homepage": "http://hiqdev.com/"
+        }
+    ],
+    "require": {
+        "hiqsol/core": "dev-master"
+    },
+    "require-dev": {
+        "hiqdev/hidev-php": "<2.0 || dev-master",
+        "hiqsol/hidev-hiqsol": "<2.0 || dev-master"
+    },
+    "extra": {
+        "config-plugin": {
+            "params": "src/config/params.php",
+            "common": "src/config/web.php"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "yii\\web\\": "src"
+        }
+    }
+}
