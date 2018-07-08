@@ -37,5 +37,6 @@
         "psr-4": {
             "yii\\web\\": "src"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
