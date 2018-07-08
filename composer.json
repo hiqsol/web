@@ -21,7 +21,8 @@
         }
     ],
     "require": {
-        "hiqsol/core": "dev-master"
+        "hiqsol/core": "dev-master",
+        "psr/http-message": "^1.0"
     },
     "require-dev": {
         "hiqdev/hidev-php": "<2.0 || dev-master",
