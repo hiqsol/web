@@ -31,7 +31,7 @@
     "extra": {
         "config-plugin": {
             "params": "src/config/params.php",
-            "common": "src/config/web.php"
+            "web": "src/config/web.php"
         }
     },
     "autoload": {
