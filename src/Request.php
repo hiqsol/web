@@ -308,7 +308,7 @@ class Request extends \yii\base\Request implements ServerRequestInterface
      */
     public function resolve()
     {
-        $result = Yii::$app->getUrlManager()->parseRequest($this);
+        $result = $this->container->get('urlManager')->parseRequest($this);
         if ($result !== false) {
             [$route, $params] = $result;
             if ($this->_queryParams === null) {

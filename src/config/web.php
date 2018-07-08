@@ -8,6 +8,8 @@ return [
         'name' => 'web',
     ],
 
+    \yii\web\Request::class => \yii\di\Reference::to('request'),
+
     'assetManager' => [
         '__class' => \yii\web\AssetManager::class,
     ],
