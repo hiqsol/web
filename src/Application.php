@@ -7,9 +7,9 @@
 
 namespace yii\web;
 
-use Yii;
 use yii\base\InvalidRouteException;
 use yii\helpers\Url;
+use yii\helpers\Yii;
 
 /**
  * Application is the base class for all web application classes.
@@ -60,9 +60,9 @@ class Application extends \yii\base\Application
      */
     protected $request;
 
-    public function __construct(Request $request)
+    public function getAssetManager()
     {
-        parent::__construct($request);
+        return $this->container->get('assetManager');
     }
 
     /**

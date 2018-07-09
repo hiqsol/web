@@ -154,20 +154,13 @@ class UrlManager extends Component
     private $_ruleCache;
 
 
-    /**
-     * Initializes UrlManager.
-     */
+    public function __construct(UrlNormalizer $normalizer)
+    {
+        $this->normalizer = $normalizer;
+    }
+
     public function init()
     {
-        parent::init();
-
-        if ($this->normalizer !== false) {
-            $this->normalizer = Yii::createObject($this->normalizer);
-            if (!$this->normalizer instanceof UrlNormalizer) {
-                throw new InvalidConfigException('`' . get_class($this) . '::normalizer` should be an instance of `' . UrlNormalizer::class . '` or its DI compatible configuration.');
-            }
-        }
-
         if (!$this->enablePrettyUrl) {
             return;
         }
