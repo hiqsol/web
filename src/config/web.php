@@ -3,11 +3,9 @@
 use yii\di\Reference;
 
 return [
-    \yii\web\Application::class => Reference::to('application'),
-    'application' => [
+    \yii\web\Application::class => Reference::to('app'),
+    'app' => [
         '__class' => \yii\web\Application::class,
-        'id' => 'web',
-        'name' => 'web',
         'aliases' => [
             '@webroot' => '@root/web',
         ],
