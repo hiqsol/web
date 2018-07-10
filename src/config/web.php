@@ -8,10 +8,15 @@ return [
         '__class' => \yii\web\Application::class,
         'id' => 'web',
         'name' => 'web',
+        'aliases' => [
+            '@webroot' => '@root/web',
+        ],
     ],
 
     'assetManager' => [
-        '__class' => \yii\web\AssetManager::class,
+        '__class'   => \yii\web\AssetManager::class,
+        'basePath'  => '@webroot/assets',
+        'baseUrl'   => '@web/assets',
     ],
     'urlManager' => [
         '__class' => \yii\web\UrlManager::class,
