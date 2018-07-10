@@ -214,16 +214,29 @@ class AssetManager extends Component
      */
     public function init()
     {
-        parent::init();
-        $this->basePath = $this->app->getAlias($this->basePath);
-        if (!is_dir($this->basePath)) {
-            throw new InvalidConfigException("The directory does not exist: {$this->basePath}");
-        } elseif (!is_writable($this->basePath)) {
-            throw new InvalidConfigException("The directory is not writable by the Web process: {$this->basePath}");
+        $this->baseUrl = rtrim($this->app->getAlias($this->baseUrl), '/');
+    }
+
+    protected $realBasePath;
+
+    public function getRealBasePath()
+    {
+        if ($this->realBasePath === null) {
+            $this->realBasePath = $this->prepareBasePath($this->basePath);
         }
 
-        $this->basePath = realpath($this->basePath);
-        $this->baseUrl = rtrim($this->app->getAlias($this->baseUrl), '/');
+        return $this->realBasePath;
+    }
+
+    public function prepareBasePath($basePath)
+    {
+        $basePath = $this->app->getAlias($basePath);
+        if (!is_dir($basePath)) {
+            throw new InvalidConfigException("The directory does not exist: {$basePath}");
+        } elseif (!is_writable($basePath)) {
+            throw new InvalidConfigException("The directory is not writable by the Web process: {$basePath}");
+        }
+        return realpath($basePath);
     }
 
     /**
@@ -314,7 +327,7 @@ class AssetManager extends Component
                 $baseUrl = $this->app->getAlias('@web');
             } else {
                 $asset = $this->app->getAlias($actualAsset);
-                $basePath = $this->basePath;
+                $basePath = $this->realBasePath;
                 $baseUrl = $this->baseUrl;
             }
         } else {
@@ -342,7 +355,7 @@ class AssetManager extends Component
     public function getAssetPath($bundle, $asset)
     {
         if (($actualAsset = $this->resolveAsset($bundle, $asset)) !== false) {
-            return Url::isRelative($actualAsset) ? $this->basePath . '/' . $actualAsset : false;
+            return Url::isRelative($actualAsset) ? $this->realBasePath . '/' . $actualAsset : false;
         }
 
         return Url::isRelative($asset) ? $bundle->basePath . '/' . $asset : false;
@@ -480,7 +493,7 @@ class AssetManager extends Component
     {
         $dir = $this->hash($src);
         $fileName = basename($src);
-        $dstDir = $this->basePath . DIRECTORY_SEPARATOR . $dir;
+        $dstDir = $this->realBasePath . DIRECTORY_SEPARATOR . $dir;
         $dstFile = $dstDir . DIRECTORY_SEPARATOR . $fileName;
 
         if (!is_dir($dstDir)) {
@@ -530,7 +543,7 @@ class AssetManager extends Component
     protected function publishDirectory($src, $options)
     {
         $dir = $this->hash($src);
-        $dstDir = $this->basePath . DIRECTORY_SEPARATOR . $dir;
+        $dstDir = $this->realBasePath . DIRECTORY_SEPARATOR . $dir;
         if ($this->linkAssets) {
             if (!is_dir($dstDir)) {
                 FileHelper::createDirectory(dirname($dstDir), $this->dirMode, true);
@@ -584,7 +597,7 @@ class AssetManager extends Component
             return $this->_published[$path][0];
         }
         if (is_string($path) && ($path = realpath($path)) !== false) {
-            return $this->basePath . DIRECTORY_SEPARATOR . $this->hash($path) . (is_file($path) ? DIRECTORY_SEPARATOR . basename($path) : '');
+            return $this->realBasePath . DIRECTORY_SEPARATOR . $this->hash($path) . (is_file($path) ? DIRECTORY_SEPARATOR . basename($path) : '');
         }
 
         return false;
