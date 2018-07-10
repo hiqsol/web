@@ -236,6 +236,7 @@ class AssetManager extends Component
         } elseif (!is_writable($basePath)) {
             throw new InvalidConfigException("The directory is not writable by the Web process: {$basePath}");
         }
+
         return realpath($basePath);
     }
 
@@ -327,7 +328,7 @@ class AssetManager extends Component
                 $baseUrl = $this->app->getAlias('@web');
             } else {
                 $asset = $this->app->getAlias($actualAsset);
-                $basePath = $this->realBasePath;
+                $basePath = $this->getRealBasePath();
                 $baseUrl = $this->baseUrl;
             }
         } else {
@@ -355,7 +356,7 @@ class AssetManager extends Component
     public function getAssetPath($bundle, $asset)
     {
         if (($actualAsset = $this->resolveAsset($bundle, $asset)) !== false) {
-            return Url::isRelative($actualAsset) ? $this->realBasePath . '/' . $actualAsset : false;
+            return Url::isRelative($actualAsset) ? $this->getRealBasePath() . '/' . $actualAsset : false;
         }
 
         return Url::isRelative($asset) ? $bundle->basePath . '/' . $asset : false;
@@ -493,7 +494,7 @@ class AssetManager extends Component
     {
         $dir = $this->hash($src);
         $fileName = basename($src);
-        $dstDir = $this->realBasePath . DIRECTORY_SEPARATOR . $dir;
+        $dstDir = $this->getRealBasePath() . DIRECTORY_SEPARATOR . $dir;
         $dstFile = $dstDir . DIRECTORY_SEPARATOR . $fileName;
 
         if (!is_dir($dstDir)) {
@@ -543,7 +544,7 @@ class AssetManager extends Component
     protected function publishDirectory($src, $options)
     {
         $dir = $this->hash($src);
-        $dstDir = $this->realBasePath . DIRECTORY_SEPARATOR . $dir;
+        $dstDir = $this->getRealBasePath() . DIRECTORY_SEPARATOR . $dir;
         if ($this->linkAssets) {
             if (!is_dir($dstDir)) {
                 FileHelper::createDirectory(dirname($dstDir), $this->dirMode, true);
@@ -597,7 +598,7 @@ class AssetManager extends Component
             return $this->_published[$path][0];
         }
         if (is_string($path) && ($path = realpath($path)) !== false) {
-            return $this->realBasePath . DIRECTORY_SEPARATOR . $this->hash($path) . (is_file($path) ? DIRECTORY_SEPARATOR . basename($path) : '');
+            return $this->getRealBasePath() . DIRECTORY_SEPARATOR . $this->hash($path) . (is_file($path) ? DIRECTORY_SEPARATOR . basename($path) : '');
         }
 
         return false;
