@@ -3,23 +3,18 @@
 use yii\di\Reference;
 
 return [
-    \yii\web\Application::class => Reference::to('app'),
     'app' => [
         '__class' => \yii\web\Application::class,
         'aliases' => [
-            '@webroot' => '@root/web',
+            '@public' => '@root/public',
+            '@bower' => '@vendor/bower-asset',
+            '@npm' => '@vendor/npm-asset',
         ],
     ],
 
     'assetManager' => [
         '__class'   => \yii\web\AssetManager::class,
-        'aliases' => [
-            '@bower' => '@vendor/bower-asset',
-            '@npm' => '@vendor/npm-asset',
-            '@vendor/bower' => '@vendor/bower-asset',
-            '@vendor/npm' => '@vendor/npm-asset',
-        ],
-        'basePath'  => '@webroot/assets',
+        'basePath'  => '@public/assets',
         'baseUrl'   => '@web/assets',
     ],
     'urlManager' => [
@@ -60,6 +55,7 @@ return [
     ],
     'errorHandler' => [
         '__class' => \yii\web\ErrorHandler::class,
+        'errorAction' => 'site/error',
     ],
 
     'assetManager' => [
