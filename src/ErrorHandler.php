@@ -254,7 +254,7 @@ class ErrorHandler extends \yii\base\ErrorHandler
     public function renderFile($_file_, $_params_)
     {
         $_params_['handler'] = $this;
-        if ($this->exception instanceof ErrorException || !$this->app->has('view')) {
+        if ($this->exception instanceof ErrorException) {
             ob_start();
             ob_implicit_flush(false);
             extract($_params_, EXTR_OVERWRITE);
@@ -263,7 +263,7 @@ class ErrorHandler extends \yii\base\ErrorHandler
             return ob_get_clean();
         }
 
-        return $this->view->renderFile($_file_, $_params_, $this);
+        return $this->app->getView()->renderFile($_file_, $_params_, $this);
     }
 
     /**
