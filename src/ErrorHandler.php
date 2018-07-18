@@ -88,9 +88,8 @@ class ErrorHandler extends \yii\base\ErrorHandler
      */
     protected function renderException($exception)
     {
-        /// wtf? if ($this->app->has('response')) {
-        if ($this->response) {
-            $response = $this->response;
+        if ($this->app->hasResponse()) {
+            $response = $this->app->getResponse();
             // reset parameters of response to avoid interference with partially created response data
             // in case the error occurred while sending the response.
             $response->isSent = false;
@@ -499,6 +498,6 @@ class ErrorHandler extends \yii\base\ErrorHandler
      */
     protected function shouldRenderSimpleHtml()
     {
-        return YII_ENV_TEST || $this->request->getHeaderLine('x-requested-with') === 'XMLHttpRequest';
+        return YII_ENV_TEST || $this->app->getRequest()->getHeaderLine('x-requested-with') === 'XMLHttpRequest';
     }
 }
