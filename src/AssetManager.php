@@ -69,7 +69,7 @@ class AssetManager extends Component
     /**
      * @var string the root directory storing the published asset files.
      */
-    public $basePath = '@webroot/assets';
+    public $basePath = '@public/assets';
     /**
      * @var string the base URL through which the published asset files can be accessed.
      */
@@ -324,7 +324,7 @@ class AssetManager extends Component
         if (($actualAsset = $this->resolveAsset($bundle, $asset)) !== false) {
             if (strncmp($actualAsset, '@web/', 5) === 0) {
                 $asset = substr($actualAsset, 5);
-                $basePath = $this->app->getAlias('@webroot');
+                $basePath = $this->app->getAlias('@public');
                 $baseUrl = $this->app->getAlias('@web');
             } else {
                 $asset = $this->app->getAlias($actualAsset);
