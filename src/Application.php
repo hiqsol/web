@@ -60,23 +60,6 @@ class Application extends \yii\base\Application
      */
     protected $request;
 
-    public function getAssetManager()
-    {
-        return $this->container->get('assetManager');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function bootstrap()
-    {
-        $request = $this->getRequest();
-        Yii::setAlias('@webroot', dirname($request->getScriptFile()));
-        Yii::setAlias('@web', $request->getBaseUrl());
-
-        parent::bootstrap();
-    }
-
     /**
      * Handles the specified request.
      * @param Request $request the request to be handled
@@ -148,6 +131,11 @@ class Application extends \yii\base\Application
     public function setHomeUrl($value)
     {
         $this->_homeUrl = $value;
+    }
+
+    public function getAssetManager()
+    {
+        return $this->container->get('assetManager');
     }
 
 }
